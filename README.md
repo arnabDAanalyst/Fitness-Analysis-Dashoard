@@ -5,6 +5,11 @@ It records each member’s personal details, fitness
 goals, assigned trainers, membership plans, and health
 statistics such as height, weight, and BMI.
 
+![Multigym Data Analysis Dashboard](https://github.com/user-attachments/assets/47bcc027-3452-4262-9708-b4f8fe72ac27)
+
+
+
+
 # SQL Queries (Basic → Moderate)
 1️⃣Basic – Show all members
 
