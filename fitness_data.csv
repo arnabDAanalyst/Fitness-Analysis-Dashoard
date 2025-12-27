@@ -1,0 +1,101 @@
+UserID,UserName,Age,Gender,JoinDate,Goal,Trainer_Name,Membership,MembershipStart,MembershipEnd,Status,Height_cm,StartingWeight,BMI
+1,Julie Sanchez,59,Female,20-09-2024,Weight Loss,Brian Trujillo,Silver,20-09-2024,19-12-2024,Expired,151,82.4,36.1
+2,Cheryl Zuniga,28,Female,26-05-2024,Muscle Gain,Andrea Mitchell,Platinum,26-05-2024,21-05-2025,Expired,150,90.4,40.2
+3,Jason Bush,42,Male,25-04-2024,Muscle Gain,Connie Delgado,Silver,25-04-2024,24-07-2024,Expired,171,64.1,21.9
+4,Daniel Fleming,52,Male,26-05-2024,Muscle Gain,Regina Cuevas,Platinum,26-05-2024,21-05-2026,Active,152,89.2,38.6
+5,Rose Deleon,41,Male,27-05-2024,Maintenance,Brian Green,Platinum,27-05-2024,21-05-2026,Active,190,84.7,23.5
+6,Adrian Becker,32,Male,08-11-2024,Muscle Gain,Brian Green,Silver,08-11-2024,21-05-2026,Active,168,99.4,35.2
+7,Timothy Duncan,40,Male,27-11-2024,Maintenance,Connie Delgado,Gold,27-11-2024,21-05-2026,Active,173,66.5,22.2
+8,Jesse Vincent,28,Male,21-11-2024,Weight Loss,Connie Delgado,Platinum,21-11-2024,16-11-2025,Active,154,84.4,35.6
+9,Justin Roman,38,Male,21-05-2024,Weight Loss,Andrea Mitchell,Gold,21-05-2024,21-05-2026,Active,185,68.8,20.1
+10,Carrie Pena,54,Female,09-07-2024,Weight Loss,Gina Ray,Gold,09-07-2024,21-05-2026,Active,154,68.4,28.8
+11,Leslie Wells,33,Female,15-11-2024,Maintenance,James Hicks,Gold,15-11-2024,21-05-2026,Active,159,70.6,27.9
+12,Benjamin Gomez,26,Female,13-10-2024,Weight Loss,Allison Aguilar,Gold,13-10-2024,21-05-2026,Active,173,68.8,23
+13,Bryan Marks,45,Male,21-03-2024,Muscle Gain,Gina Ray,Silver,21-03-2024,21-05-2026,Active,160,91.7,35.8
+14,Steven Wallace,18,Male,17-08-2024,Maintenance,Daniel Lewis,Platinum,17-08-2024,12-08-2025,Active,166,98.8,35.9
+15,Nathan Mccormick,28,Female,11-11-2024,Weight Loss,Dennis Velez,Gold,11-11-2024,21-05-2026,Active,157,71.7,29.1
+16,Priscilla Guzman,37,Male,17-03-2024,Weight Loss,Connie Delgado,Platinum,17-03-2024,12-03-2025,Expired,156,94.8,39
+17,Joel Greene,56,Female,25-09-2024,Muscle Gain,Regina Cuevas,Silver,25-09-2024,24-12-2024,Expired,183,96.7,28.9
+18,Patrick Ware,33,Male,27-06-2024,Weight Loss,Patrick Torres,Silver,27-06-2024,25-09-2024,Expired,169,69.6,24.4
+19,Laura Lopez,48,Male,25-09-2024,Muscle Gain,James Hicks,Silver,25-09-2024,24-12-2026,Active,158,65.1,26.1
+20,Christina Blair,30,Female,07-07-2024,Muscle Gain,Joseph Jenkins,Platinum,07-07-2024,02-07-2025,Expired,184,90.2,26.6
+21,Jasmine Bailey,22,Female,15-09-2024,Weight Loss,Regina Cuevas,Gold,15-09-2024,14-03-2025,Expired,157,69.9,28.4
+22,Katrina Maldonado,58,Male,19-04-2024,Weight Loss,Allison Aguilar,Platinum,19-04-2024,14-04-2025,Expired,164,60.3,22.4
+23,Dr. Melissa Williams,60,Female,03-06-2024,Weight Loss,Brian Green,Silver,03-06-2024,01-09-2024,Expired,182,69.5,21
+24,Sierra Watkins,48,Female,19-12-2024,Weight Loss,Dennis Velez,Silver,19-12-2024,19-03-2025,Expired,186,78.9,22.8
+25,Robert Jimenez,47,Male,14-11-2024,Maintenance,James Gray,Silver,14-11-2024,12-02-2025,Expired,172,76.9,26
+26,Robert Roberts,24,Male,24-07-2024,Weight Loss,James Gray,Silver,24-07-2024,22-10-2024,Expired,171,92,31.5
+27,Randy Jenkins,47,Male,05-08-2024,Weight Loss,Brian Trujillo,Platinum,05-08-2024,31-07-2025,Expired,177,67.3,21.5
+28,Ralph Sullivan,23,Male,02-02-2024,Weight Loss,Andrea Mitchell,Platinum,02-02-2024,27-01-2025,Expired,184,93.4,27.6
+29,Alexander Garcia,28,Female,07-08-2024,Weight Loss,Ashley Gonzalez,Gold,07-08-2024,03-02-2025,Expired,175,96.1,31.4
+30,Sharon Lara,53,Female,10-08-2024,Weight Loss,Daniel Lewis,Gold,10-08-2024,06-02-2025,Expired,177,87.9,28.1
+31,Peter Dixon,21,Female,02-04-2024,Weight Loss,Brian Trujillo,Gold,02-04-2024,29-09-2024,Expired,187,89.4,25.6
+32,Eric Brown,50,Male,17-08-2024,Weight Loss,Gina Ray,Platinum,17-08-2024,12-08-2025,Active,183,66.3,19.8
+33,Christina Flowers,54,Male,22-02-2024,Maintenance,Brian Green,Platinum,22-02-2024,16-02-2025,Expired,165,76.2,28
+34,Sean Washington,54,Female,03-10-2024,Muscle Gain,Ann Taylor,Silver,03-10-2024,01-01-2025,Expired,176,86.3,27.9
+35,Tanya Burns,26,Female,11-12-2024,Muscle Gain,Brian Trujillo,Platinum,11-12-2024,06-12-2025,Active,165,70.6,25.9
+36,Donald Mathews,24,Male,15-01-2024,Maintenance,Belinda Delgado,Silver,15-01-2024,14-04-2026,Active,189,99.9,28
+37,Vincent Cole,33,Female,05-05-2024,Muscle Gain,Brian Trujillo,Platinum,05-05-2024,30-04-2025,Expired,172,95.2,32.2
+38,Kristi Raymond,59,Male,23-09-2024,Maintenance,Mr. Alexander Thompson,Gold,23-09-2024,22-03-2025,Expired,169,84.5,29.6
+39,Jason Williams,24,Male,04-11-2024,Muscle Gain,Dennis Velez,Gold,04-11-2024,03-05-2025,Expired,158,70.6,28.3
+40,John Rivera,58,Female,23-04-2024,Maintenance,Richard Robinson,Platinum,23-04-2024,18-04-2025,Expired,171,68.1,23.3
+41,Michael Fisher,35,Male,03-01-2024,Weight Loss,James Hicks,Gold,03-01-2024,01-07-2024,Expired,190,76.9,21.3
+42,Russell Barr,53,Female,09-11-2024,Maintenance,Belinda Delgado,Silver,09-11-2024,14-04-2026,Active,160,89.6,35
+43,Katie Duarte,41,Male,23-02-2024,Muscle Gain,Patrick Torres,Silver,23-02-2024,14-04-2026,Active,159,81.8,32.4
+44,Cody Lin,31,Male,12-05-2024,Maintenance,Nancy Williams,Silver,12-05-2024,14-04-2026,Active,152,96,41.6
+45,Isabella Scott,27,Male,28-09-2024,Weight Loss,James Gray,Gold,28-09-2024,27-03-2026,Active,176,99,32
+46,Jennifer Bowers,44,Male,06-01-2024,Muscle Gain,Mr. Alexander Thompson,Gold,06-01-2024,04-07-2024,Expired,171,91.3,31.2
+47,Cynthia Woods,32,Male,13-02-2024,Muscle Gain,Mr. Alexander Thompson,Platinum,13-02-2024,07-02-2025,Expired,152,94.3,40.8
+48,Ronald Smith,43,Female,08-04-2024,Muscle Gain,Regina Cuevas,Gold,08-04-2024,05-10-2024,Expired,151,86.4,37.9
+49,Kayla Lewis,52,Female,21-06-2024,Weight Loss,Brian Green,Gold,21-06-2024,18-12-2024,Expired,182,76,22.9
+50,Beth Ford,56,Female,19-03-2024,Muscle Gain,James Gray,Gold,19-03-2024,15-09-2024,Expired,166,61.5,22.3
+51,Denise Richards,54,Male,17-10-2024,Muscle Gain,Belinda Delgado,Gold,17-10-2024,15-04-2026,Active,157,75.4,30.6
+52,Kayla Gibson,52,Male,01-07-2024,Muscle Gain,Gina Ray,Platinum,01-07-2024,26-06-2025,Expired,183,97,29
+53,Charlene Scott,25,Female,11-11-2024,Maintenance,Ashley Gonzalez,Silver,11-11-2024,14-04-2026,Active,189,72.6,20.3
+54,Michael Davis,53,Male,11-07-2024,Weight Loss,Richard Robinson,Platinum,11-07-2024,06-07-2025,Expired,175,87.9,28.7
+55,Devon Coleman,37,Female,22-07-2024,Maintenance,Ashley Gonzalez,Platinum,22-07-2024,17-07-2025,Expired,161,84.6,32.6
+56,Paul Fletcher,56,Female,07-05-2024,Muscle Gain,Patrick Torres,Gold,07-05-2024,03-11-2024,Expired,177,91.4,29.2
+57,Patricia Carey,28,Male,07-11-2024,Muscle Gain,Andrea Mitchell,Gold,07-11-2024,06-05-2025,Expired,182,78.9,23.8
+58,Brooke Butler,33,Female,20-11-2024,Weight Loss,Joseph Jenkins,Platinum,20-11-2024,15-11-2025,Active,171,63.7,21.8
+59,Brooke Mack,57,Male,02-01-2024,Muscle Gain,Brian Trujillo,Silver,02-01-2024,14-04-2026,Active,165,99.4,36.5
+60,Lori Hall,33,Male,07-10-2024,Maintenance,Ashley Gonzalez,Platinum,07-10-2024,02-10-2025,Active,174,79.8,26.4
+61,Christopher Bird,51,Female,08-07-2024,Weight Loss,Patrick Torres,Silver,08-07-2024,06-10-2024,Expired,161,92.2,35.6
+62,John Wheeler,60,Female,15-02-2024,Muscle Gain,Dennis Velez,Silver,15-02-2024,15-05-2024,Expired,158,92.1,36.9
+63,Debra Woodard,28,Female,14-09-2024,Muscle Gain,Ann Taylor,Platinum,14-09-2024,09-09-2025,Active,185,77.8,22.7
+64,Ryan White,33,Female,09-11-2024,Muscle Gain,Connie Delgado,Silver,09-11-2024,07-02-2025,Expired,183,79.4,23.7
+65,Willie Robinson,52,Male,08-05-2024,Weight Loss,Brian Green,Platinum,08-05-2024,03-05-2025,Expired,167,73.4,26.3
+66,Heather Barr,22,Female,23-07-2024,Muscle Gain,Nancy Williams,Silver,23-07-2024,21-10-2026,Active,159,88.3,34.9
+67,Timothy Mcguire,44,Female,14-08-2024,Maintenance,Belinda Delgado,Platinum,14-08-2024,09-08-2025,Active,153,68.3,29.2
+68,Karen Perez,37,Female,16-07-2024,Muscle Gain,Patrick Torres,Platinum,16-07-2024,11-07-2025,Expired,150,97.7,43.4
+69,Kenneth Butler,49,Male,18-12-2024,Muscle Gain,Dennis Velez,Platinum,18-12-2024,13-12-2025,Active,188,95.9,27.1
+70,Deanna Flowers,43,Male,13-01-2024,Muscle Gain,Ashley Gonzalez,Gold,13-01-2024,11-07-2024,Expired,171,86.8,29.7
+71,Paula Reeves,60,Male,01-09-2024,Weight Loss,Nancy Williams,Platinum,01-09-2024,27-08-2025,Active,175,83.7,27.3
+72,Yvonne Middleton,38,Male,06-08-2024,Muscle Gain,Ashley Gonzalez,Silver,06-08-2024,04-11-2024,Expired,153,70.4,30.1
+73,Caitlyn Burns,23,Female,09-07-2024,Weight Loss,Belinda Delgado,Gold,09-07-2024,05-01-2025,Expired,176,70.1,22.6
+74,Charles Clark,59,Male,08-06-2024,Weight Loss,Dennis Velez,Silver,08-06-2024,06-09-2024,Expired,154,91.2,38.5
+75,Sandra Ortiz,48,Male,20-01-2024,Maintenance,Kristin Martinez,Silver,20-01-2024,19-04-2024,Expired,159,69.5,27.5
+76,Natasha Wood,56,Male,09-12-2024,Weight Loss,Brian Trujillo,Gold,09-12-2024,07-06-2026,Active,173,66.7,22.3
+77,Mrs. Meredith Cox DDS,42,Female,01-10-2024,Maintenance,Richard Robinson,Silver,01-10-2024,30-12-2024,Expired,169,83,29.1
+78,Tiffany Mckinney,37,Male,23-10-2024,Maintenance,Brian Trujillo,Silver,23-10-2024,21-01-2025,Expired,190,69.7,19.3
+79,Anthony Lopez,59,Female,14-09-2024,Weight Loss,Gina Ray,Gold,14-09-2024,13-03-2025,Expired,173,62.8,21
+80,Gregory Mayo,47,Male,14-02-2024,Muscle Gain,Ashley Gonzalez,Gold,14-02-2024,12-08-2024,Expired,173,85.4,28.5
+81,Erin Brown,52,Female,21-09-2024,Muscle Gain,Mr. Alexander Thompson,Platinum,21-09-2024,16-09-2025,Active,167,84.6,30.3
+82,Beth Johnson,23,Female,09-10-2024,Muscle Gain,Ashley Gonzalez,Platinum,09-10-2024,04-10-2025,Active,170,94.1,32.6
+83,Donna Tucker,49,Female,20-10-2024,Weight Loss,Kristin Martinez,Gold,20-10-2024,18-04-2025,Expired,174,73.5,24.3
+84,Veronica Bauer,56,Female,26-06-2024,Maintenance,James Hicks,Silver,26-06-2024,24-09-2024,Expired,166,73.6,26.7
+85,Nicole Gallegos,49,Male,03-04-2024,Maintenance,Patrick Torres,Platinum,03-04-2024,29-03-2026,Active,165,88.8,32.6
+86,Rachel Russell,23,Female,16-12-2024,Weight Loss,James Hicks,Platinum,16-12-2024,11-12-2025,Active,178,91.7,28.9
+87,Jacob Becker,53,Female,10-04-2024,Muscle Gain,Daniel Lewis,Platinum,10-04-2024,29-03-2026,Active,187,74.8,21.4
+88,Cheryl Spencer,34,Male,23-06-2024,Weight Loss,Dennis Velez,Gold,23-06-2024,29-03-2026,Active,179,70.8,22.1
+89,Wesley Townsend,29,Male,24-02-2024,Weight Loss,Brian Trujillo,Gold,24-02-2024,29-03-2026,Active,184,98,28.9
+90,Robert Wright,24,Male,19-12-2024,Muscle Gain,James Hicks,Gold,19-12-2024,29-03-2026,Active,183,83.9,25.1
+91,Sharon Barker,26,Female,10-03-2024,Weight Loss,Kristin Martinez,Gold,10-03-2024,29-03-2026,Active,150,88.3,39.2
+92,Michael Ramirez,49,Male,23-05-2024,Weight Loss,Gina Ray,Platinum,23-05-2024,29-03-2026,Active,158,85.5,34.2
+93,Karen Graham,21,Female,16-08-2024,Muscle Gain,Allison Aguilar,Gold,16-08-2024,29-03-2026,Active,178,73.6,23.2
+94,Shawn Allen,21,Male,16-07-2024,Weight Loss,James Gray,Silver,16-07-2024,29-03-2026,Active,154,83.1,35
+95,Aaron Clarke,44,Male,08-02-2024,Maintenance,Allison Aguilar,Gold,08-02-2024,29-03-2026,Active,157,82.3,33.4
+96,Leah Petty,37,Male,10-08-2024,Maintenance,Daniel Lewis,Gold,10-08-2024,06-02-2025,Expired,187,99.6,28.5
+97,Troy Nichols,28,Male,07-11-2024,Weight Loss,James Gray,Silver,07-11-2024,05-02-2025,Expired,166,86.4,31.4
+98,Lisa James,56,Female,01-03-2024,Muscle Gain,Dennis Velez,Silver,01-03-2024,30-05-2024,Expired,176,78,25.2
+99,Katherine Harris,47,Male,23-05-2024,Maintenance,Gina Ray,Silver,23-05-2024,21-08-2024,Expired,168,88.1,31.2
+100,Cassandra Harding,52,Male,19-11-2024,Maintenance,Kristin Martinez,Gold,19-11-2024,18-05-2025,Expired,162,77,29.3

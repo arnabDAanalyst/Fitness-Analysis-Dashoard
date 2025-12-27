@@ -1,0 +1,532 @@
+/**
+ * @fileoverview Forbid certain propTypes
+ */
+
+'use strict';
+
+const variableUtil = require('../util/variable');
+const propsUtil = require('../util/props');
+const astUtil = require('../util/ast');
+const docsUrl = require('../util/docsUrl');
+const propWrapperUtil = require('../util/propWrapper');
+const report = require('../util/report');
+const getText = require('../util/eslint').getText;
+
+// ------------------------------------------------------------------------------
+// Constants
+// ------------------------------------------------------------------------------
+
+const DEFAULTS = ['any', 'array', 'object'];
+
+// ------------------------------------------------------------------------------
+// Rule Definition
+// ------------------------------------------------------------------------------
+
+const messages = {
+  forbiddenPropType: 'Prop type "{{target}}" is forbidden',
+};
+
+module.exports = {
+  meta: {
+    docs: {
+      description: 'Disallow certain propTypes',
+      category: 'Best Practices',
+      recommended: false,
+      url: docsUrl('forbid-prop-types'),
+    },
+
+    messages,
+
+    schema: [{
+      type: 'object',
+      properties: {
+        forbid: {
+          type: 'array',
+          items: {
+            type: 'string',
+          },
+        },
+        checkContextTypes: {
+          type: 'boolean',
+        },
+        checkChildContextTypes: {
+          type: 'boolean',
+        },
+      },
+      additionalProperties: true,
+    }],
+  },
+
+  create(context) {
+    const configuration = context.options[0] || {};
+    const checkContextTypes = configuration.checkContextTypes || false;
+    const checkChildContextTypes = configuration.checkChildContextTypes || false;
+    let propTypesPackageName = null;
+    let reactPackageName = null;
+    let isForeignPropTypesPackage = false;
+
+    function isPropTypesPackage(node) {
+      return (
+        node.type === 'Identifier'
+        && (
+          node.name === null
+          || node.name === propTypesPackageName
+          || !isForeignPropTypesPackage
+        )
+      ) || (
+        node.type === 'MemberExpression'
+        && (
+          node.object.name === null
+          || node.object.name === reactPackageName
+          || !isForeignPropTypesPackage
+        )
+      );
+    }
+
+    function isForbidden(type) {
+      const forbid = configuration.forbid || DEFAULTS;
+      return forbid.indexOf(type) >= 0;
+    }
+
+    function reportIfForbidden(type, declaration, target) {
+      if (isForbidden(type)) {
+        report(context, messages.forbiddenPropType, 'forbiddenPropType', {
+          node: declaration,
+          data: {
+            target,
+          },
+        });
+      }
+    }
+
+    function shouldCheckContextTypes(node) {
+      if (checkContextTypes && propsUtil.isContextTypesDeclaration(node)) {
+        return true;
+      }
+      return false;
+    }
+
+    function shouldCheckChildContextTypes(node) {
+      if (checkChildContextTypes && propsUtil.isChildContextTypesDeclaration(node)) {
+        return true;
+      }
+      return false;
+    }
+
+    /**
+     * Checks if propTypes declarations are forbidden
+     * @param {Array} declarations The array of AST nodes being checked.
+     * @returns {void}
+     */
+    function checkProperties(declarations) {
+      if (declarations) {
+        declarations.forEach((declaration) => {
+          if (declaration.type !== 'Property') {
+            return;
+          }
+          let target;
+          let value = declaration.value;
+          if (
+            value.type === 'MemberExpression'
+            && value.property
+            && value.property.name
+            && value.property.name === 'isRequired'
+          ) {
+            value = value.object;
+          }
+          if (value.type === 'CallExpression') {
+            if (!isPropTypesPackage(value.callee)) {
+              return;
+            }
+            value.arguments.forEach((arg) => {
+              const name = arg.type === 'MemberExpression' ? arg.property.name : arg.name;
+              reportIfForbidden(name, declaration, name);
+            });
+            value = value.callee;
+          }
+          if (!isPropTypesPackage(value)) {
+            return;
+          }
+          if (value.property) {
+            target = value.property.name;
+          } else if (value.type === 'Identifier') {
+            target = value.name;
+          }
+          reportIfForbidden(target, declaration, target);
+        });
+      }
+    }
+
+    function checkNode(node) {
+      switch (node && node.type) {
+        case 'ObjectExpression':
+          checkProperties(node.properties);
+          break;
+        case 'Identifier': {
+          const propTypesObject = variableUtil.findVariableByName(context, node, node.name);
+          if (propTypesObject && propTypesObject.properties) {
+            checkProperties(propTypesObject.properties);
+          }
+          break;
+        }
+        case 'CallExpression': {
+          const innerNode = node.arguments && node.arguments[0];
+          if (
+            propWrapperUtil.isPropWrapperFunction(context, getText(context, node.callee))
+            && innerNode
+          ) {
+            checkNode(innerNode);
+          }
+          break;
+        }
+        default:
+          break;
+      }
+    }
+
+    return {
+      ImportDeclaration(node) {
+        if (node.source && node.source.value === 'prop-types') { // import PropType from "prop-types"
+          if (node.specifiers.length > 0) {
+            propTypesPackageName = node.specifiers[0].local.name;
+          }
+        } else if (node.source && node.source.value === 'react') { // import { PropTypes } from "react"
+          if (node.specifiers.length > 0) {
+            reactPackageName = node.specifiers[0].local.name; // guard against accidental anonymous `import "react"`
+          }
+          if (node.specifiers.length >= 1) {
+            const propTypesSpecifier = node.specifiers.find((specifier) => (
+              specifier.imported && specifier.imported.name === 'PropTypes'
+            ));
+            if (propTypesSpecifier) {
+              propTypesPackageName = propTypesSpecifier.local.name;
+            }
+          }
+        } else { // package is not imported from "react" or "prop-types"
+          // eslint-disable-next-line no-lonely-if
+          if (node.specifiers.some((x) => x.local.name === 'PropTypes')) { // assert: node.specifiers.length > 1
+            isForeignPropTypesPackage = true;
+          }
+        }
+      },
+
+      'ClassProperty, PropertyDefinition'(node) {
+        if (
+          !propsUtil.isPropTypesDeclaration(node)
+          && !isPropTypesPackage(node)
+          && !shouldCheckContextTypes(node)
+          && !shouldCheckChildContextTypes(node)
+        ) {
+          return;
+        }
+        checkNode(node.value);
+      },
+
+      MemberExpression(node) {
+        if (
+          !propsUtil.isPropTypesDeclaration(node)
+          && !isPropTypesPackage(node)
+          && !shouldCheckContextTypes(node)
+          && !shouldCheckChildContextTypes(node)
+        ) {
+          return;
+        }
+
+        checkNode(node.parent.right);
+      },
+
+      CallExpression(node) {
+        if (
+          node.callee.object
+          && !isPropTypesPackage(node.callee.object)
+          && !propsUtil.isPropTypesDeclaration(node.callee)
+        ) {
+          return;
+        }
+
+        if (
+          node.arguments.length > 0
+          && (node.callee.name === 'shape' || astUtil.getPropertyName(node.callee) === 'shape')
+        ) {
+          checkProperties(node.arguments[0].properties);
+        }
+      },
+
+      MethodDefinition(node) {
+        if (
+          !propsUtil.isPropTypesDeclaration(node)
+          && !isPropTypesPackage(node)
+          && !shouldCheckContextTypes(node)
+          && !shouldCheckChildContextTypes(node)
+        ) {
+          return;
+        }
+
+        const returnStatement = astUtil.findReturnStatement(node);
+
+        if (returnStatement && returnStatement.argument) {
+          checkNode(returnStatement.argument);
+        }
+      },
+
+      ObjectExpression(node) {
+        node.properties.forEach((property) => {
+          if (!property.key) {
+            return;
+          }
+
+          if (
+            !propsUtil.isPropTypesDeclaration(property)
+            && !isPropTypesPackage(property)
+            && !shouldCheckContextTypes(property)
+            && !shouldCheckChildContextTypes(property)
+          ) {
+            return;
+          }
+          if (property.value.type === 'ObjectExpression') {
+            checkProperties(property.value.properties);
+          }
+        });
+      },
+
+    };
+  },
+};
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                /**
+ * @fileoverview Forbid certain props on components
+ * @author Joe Lencioni
+ */
+
+'use strict';
+
+const minimatch = require('minimatch');
+const docsUrl = require('../util/docsUrl');
+const report = require('../util/report');
+
+// ------------------------------------------------------------------------------
+// Constants
+// ------------------------------------------------------------------------------
+
+const DEFAULTS = ['className', 'style'];
+
+// ------------------------------------------------------------------------------
+// Rule Definition
+// ------------------------------------------------------------------------------
+
+const messages = {
+  propIsForbidden: 'Prop "{{prop}}" is forbidden on Components',
+};
+
+/** @type {import('eslint').Rule.RuleModule} */
+module.exports = {
+  meta: {
+    docs: {
+      description: 'Disallow certain props on components',
+      category: 'Best Practices',
+      recommended: false,
+      url: docsUrl('forbid-component-props'),
+    },
+
+    messages,
+
+    schema: [{
+      type: 'object',
+      properties: {
+        forbid: {
+          type: 'array',
+          items: {
+            anyOf: [
+              { type: 'string' },
+              {
+                type: 'object',
+                properties: {
+                  propName: { type: 'string' },
+                  allowedFor: {
+                    type: 'array',
+                    uniqueItems: true,
+                    items: { type: 'string' },
+                  },
+                  message: { type: 'string' },
+                },
+                additionalProperties: false,
+              },
+              {
+                type: 'object',
+                properties: {
+                  propName: { type: 'string' },
+                  disallowedFor: {
+                    type: 'array',
+                    uniqueItems: true,
+                    minItems: 1,
+                    items: { type: 'string' },
+                  },
+                  message: { type: 'string' },
+                },
+                required: ['disallowedFor'],
+                additionalProperties: false,
+              },
+
+              {
+                type: 'object',
+                properties: {
+                  propNamePattern: { type: 'string' },
+                  allowedFor: {
+                    type: 'array',
+                    uniqueItems: true,
+                    items: { type: 'string' },
+                  },
+                  message: { type: 'string' },
+                },
+                additionalProperties: false,
+              },
+              {
+                type: 'object',
+                properties: {
+                  propNamePattern: { type: 'string' },
+                  disallowedFor: {
+                    type: 'array',
+                    uniqueItems: true,
+                    minItems: 1,
+                    items: { type: 'string' },
+                  },
+                  message: { type: 'string' },
+                },
+                required: ['disallowedFor'],
+                additionalProperties: false,
+              },
+            ],
+          },
+        },
+      },
+    }],
+  },
+
+  create(context) {
+    const configuration = context.options[0] || {};
+    const forbid = new Map((configuration.forbid || DEFAULTS).map((value) => {
+      const propName = typeof value === 'string' ? value : value.propName;
+      const propPattern = value.propNamePattern;
+      const prop = propName || propPattern;
+      const options = {
+        allowList: typeof value === 'string' ? [] : (value.allowedFor || []),
+        disallowList: typeof value === 'string' ? [] : (value.disallowedFor || []),
+        message: typeof value === 'string' ? null : value.message,
+        isPattern: !!value.propNamePattern,
+      };
+      return [prop, options];
+    }));
+
+    function getPropOptions(prop) {
+      // Get config options having pattern
+      const propNamePatternArray = Array.from(forbid.entries()).filter((propEntry) => propEntry[1].isPattern);
+      // Match current prop with pattern options, return if matched
+      const propNamePattern = propNamePatternArray.find((propPatternVal) => minimatch(prop, propPatternVal[0]));
+      // Get options for matched propNamePattern
+      const propNamePatternOptions = propNamePattern && propNamePattern[1];
+
+      const options = forbid.get(prop) || propNamePatternOptions;
+      return options;
+    }
+
+    function isForbidden(prop, tagName) {
+      const options = getPropOptions(prop);
+      if (!options) {
+        return false;
+      }
+
+      // disallowList should have a least one item (schema configuration)
+      const isTagForbidden = options.disallowList.length > 0
+        ? options.disallowList.indexOf(tagName) !== -1
+        : options.allowList.indexOf(tagName) === -1;
+
+      // if the tagName is undefined (`<this.something>`), we assume it's a forbidden element
+      return typeof tagName === 'undefined' || isTagForbidden;
+    }
+
+    return {
+      JSXAttribute(node) {
+        const parentName = node.parent.name;
+        // Extract a component name when using a "namespace", e.g. `<AntdLayout.Content />`.
+        const tag = parentName.name || `${parentName.object.name}.${parentName.property.name}`;
+        const componentName = parentName.name || parentName.property.name;
+        if (componentName && typeof componentName[0] === 'string' && componentName[0] !== componentName[0].toUpperCase()) {
+          // This is a DOM node, not a Component, so exit.
+          return;
+        }
+
+        const prop = node.name.name;
+
+        if (!isForbidden(prop, tag)) {
+          return;
+        }
+
+        const customMessage = getPropOptions(prop).message;
+
+        report(context, customMessage || messages.propIsForbidden, !customMessage && 'propIsForbidden', {
+          node,
+          data: {
+            prop,
+          },
+        });
+      },
+    };
+  },
+};
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            /**
+ * @fileoverview Prevent missing displayName in a React component definition
+ * @author Yannick Croissant
+ */
+
+'use strict';
+
+const values = require('object.values');
+const filter = require('es-iterator-helpers/Iterator.prototype.filter');
+const forEach = require('es-iterator-helpers/Iterator.prototype.forEach');
+
+const Components = require('../util/Components');
+const isCreateContext = require('../util/isCreateContext');
+const astUtil = require('../util/ast');
+const componentUtil = require('../util/componentUtil');
+const docsUrl = require('../util/docsUrl');
+const testReactVersion = require('../util/version').testReactVersion;
+const propsUtil = require('../util/props');
+const report = require('../util/report');
+
+// ------------------------------------------------------------------------------
+// Rule Definition
+// ------------------------------------------------------------------------------
+
+const messages = {
+  noDisplayName: 'Component definition is missing display name',
+  noContextDisplayName: 'Context definition is missing display name',
+};
+
+/** @type {import('eslint').Rule.RuleModule} */
+module.exports = {
+  meta: {
+    docs: {
+      description: 'Disallow missing displayName in a React component definition',
+      category: 'Best Practices',
+      recommended: true,
+      url: docsUrl('display-name'),
+    },
+
+    messages,
+
+    schema: [{
+      type: 'object',
+      properties: {
+        ignoreTranspilerName: {
+          type: 'boolean',
+        },
+        checkContextObjects: {
+          type: 'boolean',
+        },
+      },
+      additionalProperties: false,
+    }],
+  },
+
+  create: Components.detect((context, components, utils) => {
+    const config = context.options[0] || {};
+    const igno
